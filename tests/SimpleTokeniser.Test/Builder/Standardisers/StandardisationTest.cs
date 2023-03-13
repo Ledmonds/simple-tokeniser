@@ -60,14 +60,15 @@ public class TokeniserStandardisationTest
     [Theory]
     [MemberData(nameof(WholeWordTestData))]
     [MemberData(nameof(GermanStandardisationTestData))]
-    public void Standardises_patterns_in_tokens_with_their_mapping_equivalent(Token[] input, ISet<Standardisation> standardisations, Token[] expected)
+    public void Standardises_patterns_in_tokens_with_their_mapping_equivalent(
+        Token[] input,
+        ISet<Standardisation> standardisations,
+        Token[] expected
+    )
     {
-        var result = new TokeniserBuilder(input)
-            .Standardise(standardisations)
-            .Tokenise();
+        var result = new TokeniserBuilder(input).Standardise(standardisations).Tokenise();
 
-        result.Should().BeEquivalentTo(expected, opts =>
-            opts.WithStrictOrdering());
+        result.Should().BeEquivalentTo(expected, opts => opts.WithStrictOrdering());
     }
 
     [Fact]
@@ -79,15 +80,32 @@ public class TokeniserStandardisationTest
             new("e", "a"),
         };
 
-        var input = new Token[] { "essential", "text", "contains", "no", "patterns", "to", "standardise" };
+        var input = new Token[]
+        {
+            "essential",
+            "text",
+            "contains",
+            "no",
+            "patterns",
+            "to",
+            "standardise"
+        };
 
         var result = new TokeniserBuilder(input)
             .Standardise(circularReferencingStandardisations)
             .Tokenise();
 
-        var expected = new Token[] { "assantiel", "taxt", "conteins", "no", "pettarns", "to", "stenderdisa" };
+        var expected = new Token[]
+        {
+            "assantiel",
+            "taxt",
+            "conteins",
+            "no",
+            "pettarns",
+            "to",
+            "stenderdisa"
+        };
 
-        result.Should().BeEquivalentTo(expected, opts =>
-            opts.WithStrictOrdering());
+        result.Should().BeEquivalentTo(expected, opts => opts.WithStrictOrdering());
     }
 }

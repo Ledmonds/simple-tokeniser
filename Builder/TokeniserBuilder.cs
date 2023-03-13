@@ -10,7 +10,9 @@ public class TokeniserBuilder : ITokeniserBuilder
 {
     private ISet<Token> _tokens { get; set; } = new HashSet<Token>();
     private readonly CultureInfo _cultureInfo = CultureInfo.InvariantCulture;
-    private const StringSplitOptions SPLIT_OPTIONS = StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries;
+
+    private const StringSplitOptions SPLIT_OPTIONS =
+        StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries;
 
     public TokeniserBuilder(string input)
     {
@@ -37,8 +39,7 @@ public class TokeniserBuilder : ITokeniserBuilder
     public TokeniserBuilder ToLower()
     {
         _tokens = _tokens
-            .Select(token =>
-                token.Value.ToLower(_cultureInfo))
+            .Select(token => token.Value.ToLower(_cultureInfo))
             .Select(token => new Token(token))
             .ToHashSet();
 
@@ -48,8 +49,7 @@ public class TokeniserBuilder : ITokeniserBuilder
     public TokeniserBuilder ToUpper()
     {
         _tokens = _tokens
-            .Select(token =>
-                token.Value.ToUpper(_cultureInfo))
+            .Select(token => token.Value.ToUpper(_cultureInfo))
             .Select(token => new Token(token))
             .ToHashSet();
 
@@ -58,9 +58,7 @@ public class TokeniserBuilder : ITokeniserBuilder
 
     public TokeniserBuilder Select(ICustomTokeniser customTokeniser)
     {
-        _tokens = _tokens
-            .Select(customTokeniser.Tokeniser)
-            .ToHashSet();
+        _tokens = _tokens.Select(customTokeniser.Tokeniser).ToHashSet();
 
         return this;
     }
@@ -68,8 +66,7 @@ public class TokeniserBuilder : ITokeniserBuilder
     public TokeniserBuilder Deliminate(Delimiter delimiter)
     {
         _tokens = _tokens
-            .SelectMany(token =>
-                token.Value.Split(delimiter, SPLIT_OPTIONS))
+            .SelectMany(token => token.Value.Split(delimiter, SPLIT_OPTIONS))
             .Select(token => new Token(token))
             .ToHashSet();
 
@@ -79,8 +76,7 @@ public class TokeniserBuilder : ITokeniserBuilder
     public TokeniserBuilder Deliminate(IEnumerable<Delimiter> delimiters)
     {
         _tokens = _tokens
-            .SelectMany(token =>
-                token.Value.Split(delimiters, SPLIT_OPTIONS))
+            .SelectMany(token => token.Value.Split(delimiters, SPLIT_OPTIONS))
             .Select(token => new Token(token))
             .ToHashSet();
 
@@ -95,7 +91,16 @@ public class TokeniserBuilder : ITokeniserBuilder
     public TokeniserBuilder Standardise(ISet<Standardisation> standardisations)
     {
         _tokens = _tokens
-            .Select(token => StandardiseToken(token, standardisations.ToDictionary(pattern => pattern.Pattern, mapping => mapping.Mapping)))
+            .Select(
+                token =>
+                    StandardiseToken(
+                        token,
+                        standardisations.ToDictionary(
+                            pattern => pattern.Pattern,
+                            mapping => mapping.Mapping
+                        )
+                    )
+            )
             .ToHashSet();
 
         return this;
@@ -103,12 +108,9 @@ public class TokeniserBuilder : ITokeniserBuilder
 
     private Token StandardiseToken(Token token, IDictionary<string, string> standardisations)
     {
-        var patterns = standardisations
-            .Select(standardisation => standardisation.Key)
-            .ToArray();
+        var patterns = standardisations.Select(standardisation => standardisation.Key).ToArray();
 
-        var tokenSegments = token.Value
-            .SplitAndKeep(patterns);
+        var tokenSegments = token.Value.SplitAndKeep(patterns);
 
         var stringBuilder = new StringBuilder();
         foreach (var tokenSegment in tokenSegments)

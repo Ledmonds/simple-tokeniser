@@ -4,21 +4,30 @@ namespace SimpleTokeniser.Extensions;
 
 public static class StringExtensions
 {
-    public static IEnumerable<string> Split(this string input, Delimiter delimiter, StringSplitOptions options = StringSplitOptions.None)
+    public static IEnumerable<string> Split(
+        this string input,
+        Delimiter delimiter,
+        StringSplitOptions options = StringSplitOptions.None
+    )
     {
         return input.Split(delimiter.Value, options);
     }
 
-    public static IEnumerable<string> Split(this string input, IEnumerable<Delimiter> delimiters, StringSplitOptions options = StringSplitOptions.None)
+    public static IEnumerable<string> Split(
+        this string input,
+        IEnumerable<Delimiter> delimiters,
+        StringSplitOptions options = StringSplitOptions.None
+    )
     {
-        var delimeterValues = delimiters
-            .Select(delim => delim.Value)
-            .ToArray();
+        var delimeterValues = delimiters.Select(delim => delim.Value).ToArray();
 
         return input.Split(delimeterValues, options);
     }
 
-    public static IEnumerable<string> SplitAndKeep(this string input, IEnumerable<string> delimiters)
+    public static IEnumerable<string> SplitAndKeep(
+        this string input,
+        IEnumerable<string> delimiters
+    )
     {
         var splits = new List<string>() { input };
 
@@ -44,7 +53,6 @@ public static class StringExtensions
             }
         }
 
-        return splits
-            .Where(segment => !string.IsNullOrEmpty(segment));
+        return splits.Where(segment => !string.IsNullOrEmpty(segment));
     }
 }
