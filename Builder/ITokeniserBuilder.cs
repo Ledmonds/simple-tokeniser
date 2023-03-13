@@ -1,5 +1,4 @@
 ﻿using SimpleTokeniser.Builder.Standardisers;
-using SimpleTokeniser.Builder.Tokens;
 
 namespace SimpleTokeniser.Builder;
 

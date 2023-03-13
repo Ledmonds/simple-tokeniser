@@ -1,5 +1,4 @@
 ﻿using SimpleTokeniser.Builder.Standardisers;
-using SimpleTokeniser.Builder.Tokens;
 using SimpleTokeniser.Extensions;
 using System.Globalization;
 using System.Text;
@@ -56,9 +55,9 @@ public class TokeniserBuilder : ITokeniserBuilder
         return this;
     }
 
-    public TokeniserBuilder Select(ICustomTokeniser customTokeniser)
+    public TokeniserBuilder Select(Func<Token, Token> func)
     {
-        _tokens = _tokens.Select(customTokeniser.Tokeniser).ToHashSet();
+        _tokens = _tokens.Select(func).ToHashSet();
 
         return this;
     }
