@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\simple-tokeniser\SimpleTokeniser.csproj" />
+    <ProjectReference Include="..\..\SimpleTokeniser.csproj" />
   </ItemGroup>
 
 </Project>
