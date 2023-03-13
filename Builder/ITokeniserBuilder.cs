@@ -1,4 +1,5 @@
-﻿using SimpleTokeniser.Builder.Tokens;
+﻿using SimpleTokeniser.Builder.Standardisers;
+using SimpleTokeniser.Builder.Tokens;
 
 namespace SimpleTokeniser.Builder
 {
@@ -11,6 +12,8 @@ namespace SimpleTokeniser.Builder
         TokeniserBuilder ToLower();
 
         TokeniserBuilder ToUpper();
+
+        TokeniserBuilder Standardise(ISet<Standardisation> standardisations);
 
         IReadOnlyCollection<Token> Tokenise();
     }
