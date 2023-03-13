@@ -1,20 +1,19 @@
 ﻿using SimpleTokeniser.Builder.Standardisers;
 using SimpleTokeniser.Builder.Tokens;
 
-namespace SimpleTokeniser.Builder
+namespace SimpleTokeniser.Builder;
+
+public interface ITokeniserBuilder
 {
-    public interface ITokeniserBuilder
-    {
-        TokeniserBuilder Deliminate(Delimiter delimiter);
+    TokeniserBuilder Deliminate(Delimiter delimiter);
 
-        TokeniserBuilder Deliminate(IEnumerable<Delimiter> delimiters);
+    TokeniserBuilder Deliminate(IEnumerable<Delimiter> delimiters);
 
-        TokeniserBuilder ToLower();
+    TokeniserBuilder ToLower();
 
-        TokeniserBuilder ToUpper();
+    TokeniserBuilder ToUpper();
 
-        TokeniserBuilder Standardise(ISet<Standardisation> standardisations);
+    TokeniserBuilder Standardise(ISet<Standardisation> standardisations);
 
-        IReadOnlyCollection<Token> Tokenise();
-    }
+    IReadOnlyCollection<Token> Tokenise();
 }
